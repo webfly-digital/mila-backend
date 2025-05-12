@@ -1,0 +1,86 @@
+<?
+
+namespace Ctweb\SMSAuth;
+
+use Bitrix\Main\Config\Option;
+use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\ModuleManager;
+
+
+Loc::loadMessages(__FILE__);
+
+\CModule::AddAutoloadClasses(
+    "ctweb.smsauth",
+    array(
+        "\\Ctweb\\SMSAuth\\Manager" => "lib/manager.php",
+        "\\Ctweb\\SMSAuth\\ProviderBase" => "lib/provider.base.php",
+        "\\Ctweb\\SMSAuth\\CAdminForm" => "lib/cadminform.php",
+    )
+);
+
+require_once(__DIR__ . '/vendor/autoload.php');
+
+class Module {
+    const MODULE_ID = 'ctweb.smsauth';
+    const LOG_TYPE_NONE = 0;
+    const LOG_TYPE_MESSAGES = 1;
+    const LOG_TYPE_ERRORS = 2;
+    const LOG_TYPE_ALL = 3;
+
+    const LOG_FILE = __DIR__ . '/logs/module.log';
+
+    static function isActive() {
+        return Option::get(self::MODULE_ID, 'ACTIVE', 0);
+    }
+
+    static public function getLogOptions() {
+        return array(
+            self::LOG_TYPE_NONE => Loc::getMessage('LOG_TYPE_NONE'),
+            self::LOG_TYPE_MESSAGES => Loc::getMessage('LOG_TYPE_MESSAGES'),
+            self::LOG_TYPE_ERRORS => Loc::getMessage('LOG_TYPE_ERRORS'),
+            self::LOG_TYPE_ALL => Loc::getMessage('LOG_TYPE_ALL'),
+        );
+    }
+
+    /**
+     * @return bool
+     */
+    public static function CoreHasOwnPhoneAuth()
+    {
+        return (bool) CheckVersion(ModuleManager::getVersion('main'), '18.5.0');
+    }
+
+    /**
+     * @emits OnGetPhoneFieldList ( &array )
+     * @return array
+     */
+    static public function getPhoneFieldList() {
+        $result = array();
+
+        if (self::CoreHasOwnPhoneAuth()) {
+            $result["PHONE_NUMBER"] = Loc::getMessage("CW_REG_FIELD_PHONE_NUMBER");
+        }
+
+        $result["PERSONAL_PHONE"] = Loc::GetMessage("FIELD_PERSONAL_PHONE");
+        $result["PERSONAL_FAX"] = Loc::GetMessage("FIELD_PERSONAL_FAX");
+        $result["PERSONAL_MOBILE"] = Loc::GetMessage("FIELD_PERSONAL_MOBILE");
+        $result["PERSONAL_PAGER"] = Loc::GetMessage("FIELD_PERSONAL_PAGER");
+
+        $result["WORK_PHONE"] = Loc::GetMessage("FIELD_WORK_PHONE");
+        $result["WORK_FAX"] = Loc::GetMessage("FIELD_WORK_FAX");
+        $result["WORK_PAGER"] = Loc::GetMessage("FIELD_WORK_PAGER");
+
+        $event = new \Bitrix\Main\Event(self::MODULE_ID, "OnGetPhoneFieldList", array(&$result));
+        $event->send();
+
+        return $result;
+    }
+    
+    /**
+     * @emits OnGetPhoneFieldList ( &array )
+     * @return array
+     */
+    static public function getSiteTemplates() {
+        $result = array();
+		
+		//

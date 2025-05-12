@@ -1,0 +1,81 @@
+<?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+
+/** @var array $arResult */
+
+if (empty($arResult["ITEMS"])) {
+    return;
+}
+
+$this->setFrameMode(true);
+?>
+
+<section class="default">
+    <div class="catalog_wrapper">
+        <?php foreach ($arResult["ITEMS"] as $item) { ?>
+            <?php
+            $labels = $item['PROPERTIES']['LEYBLY_STATUSY']['VALUE_ENUM'] ?? [];
+
+            $picture = $item['PREVIEW_PICTURE']['SRC']
+                ?: $item['DETAIL_PICTURE']['SRC']
+                    ?: SITE_TEMPLATE_PATH . '/assets/img/png/placeholder.png';
+
+            $typeName = $item['PROPERTIES']['TIP_CHAYA']['VALUE']
+                ?: $item['PROPERTIES']['TIP_KOFE']['VALUE']
+                    ?: '';
+
+            $price = $item['ITEM_PRICES'][0]['PRINT_PRICE'];
+            $oldPrice = $item['ITEM_PRICES'][0]['PRINT_BASE_PRICE'];
+            $showOld = $oldPrice && $oldPrice !== $price;
+            ?>
+
+            <div class="product_card" data-type="badges_holder" id="<?= $item['ID'] ?>">
+                <a href="<?= $item['DETAIL_PAGE_URL'] ?>" class="imgholder">
+                    <div class="labels">
+                        <?php foreach ($labels as $lbl) { ?>
+                            <p class="label red"><?= htmlspecialcharsbx($lbl) ?></p>
+                        <?php } ?>
+                    </div>
+                    <img src="<?= $picture ?>" alt="<?= htmlspecialcharsbx($item['NAME']) ?>">
+                    <div class="like" data-fav="<?= $item['ID'] ?>"></div>
+                </a>
+
+                <div class="stars" data-score="0"></div>
+
+                <?php if ($typeName) { ?>
+                    <p class="text grey"><?= htmlspecialcharsbx($typeName) ?></p>
+                <?php } ?>
+
+                <a href="<?= $item['DETAIL_PAGE_URL'] ?>" class="heading_4"><?= htmlspecialcharsbx($item['NAME']) ?></a>
+
+                <?php if ($item['PREVIEW_TEXT']) { ?>
+                    <p class="text"><?= htmlspecialcharsbx($item['PREVIEW_TEXT']) ?></p>
+                <?php } ?>
+
+                <?php if (!empty($item['OFFERS'])) { ?>
+                    <nav class="badges medium" data-type="badges">
+                        <?php foreach ($item['OFFERS'] as $offer) { ?>
+                            <?php
+                            $weight = $offer['PROPERTIES']['VES']['VALUE'];
+                            if ($weight) { ?>
+                                <p class="badge"><?= htmlspecialcharsbx($weight) ?> г</p>
+                            <?php } ?>
+                        <?php } ?>
+                    </nav>
+                <?php } ?>
+
+                <div class="product_card-footer">
+                    <div class="badges_content" data-type="badges_content">
+                        <p class="heading_4 price active">
+                            <?= $price ?>
+                            <?php if ($showOld) { ?><span><?= $oldPrice ?></span><?php } ?>
+                        </p>
+                    </div>
+                    <div class="button add2basket" data-id="<?= $item['ID'] ?>">
+                        <i class="icon-cart"></i>В корзину
+                    </div>
+                </div>
+            </div>
+
+        <?php } ?>
+    </div>
+</section>

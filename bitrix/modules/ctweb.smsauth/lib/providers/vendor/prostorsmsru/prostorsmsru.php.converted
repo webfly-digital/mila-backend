@@ -1,0 +1,12 @@
+<?
+class prostorSMSrest {
+	
+	function __construct($login, $password){
+		$this->host = 'gate.iqsms.ru';
+		$this->port = 80;
+		$this->login = $login;
+		$this->password = $password;
+	}
+
+	/* 
+	* 
