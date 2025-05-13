@@ -1,23 +1,22 @@
-<?php
-if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) {
-    die();
-}
+<?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
-use Bitrix\Main\Diag\Debug;
+/** @var array $arResult */
+/** @global CMain $APPLICATION */
 
 $ids = [];
 foreach ($arResult["SEARCH"] as $item) {
     if (
-        $item['MODULE_ID'] === 'iblock'          // товар из инфоблока
-        && $item['PARAM1']   === 'catalog'       // именно каталог
-        && is_numeric($item['ITEM_ID'])          // а не раздел/страница
+        $item['MODULE_ID'] === 'iblock' &&
+        $item['PARAM1'] === CATALOG_IBLOCK_TYPE &&
+        $item['PARAM2'] == CATALOG_IBLOCK_ID &&
+        is_numeric($item['ITEM_ID'])
     ) {
         $ids[] = (int)$item['ITEM_ID'];
     }
 }
 
 /* ----------------------------------------------------- */
-/*  Основная область                                      */
+/*  Основная область                                     */
 /* ----------------------------------------------------- */
 
 if (empty($ids)) { ?>
@@ -38,7 +37,7 @@ if (empty($ids)) { ?>
         'bitrix:catalog.section',
         'product_cards',
         [
-            'IBLOCK_TYPE'          => 'catalog',
+            'IBLOCK_TYPE'          => CATALOG_IBLOCK_TYPE,
             'IBLOCK_ID'            => CATALOG_IBLOCK_ID,
             'FILTER_NAME'          => 'arrSearchFilter',
             'PAGE_ELEMENT_COUNT'   => count($ids),
@@ -50,25 +49,24 @@ if (empty($ids)) { ?>
             'ELEMENT_SORT_ORDER'   => 'DESC',
             'CACHE_TYPE'           => 'A',
             'CACHE_TIME'           => '36000000',
+            'MODE' => 'search',
         ],
         false
     );
-} ?>
+}
 
-<?php
 /* ----------------------------------------------------- */
-/*  Дополнительный блок внизу («Попробуйте также …»)      */
+/*  Дополнительный блок внизу («Попробуйте также …»)     */
 /* ----------------------------------------------------- */
 
 global $arrExtraFilter;
-
 $arrExtraFilter = [];
 
 $APPLICATION->IncludeComponent(
     'bitrix:catalog.section',
     'product_cards',
     [
-        'IBLOCK_TYPE'          => 'catalog',
+        'IBLOCK_TYPE'          => CATALOG_IBLOCK_TYPE,
         'IBLOCK_ID'            => CATALOG_IBLOCK_ID,
         'FILTER_NAME'          => 'arrExtraFilter',
         'PAGE_ELEMENT_COUNT'   => 4,
@@ -78,6 +76,7 @@ $APPLICATION->IncludeComponent(
         'SHOW_ALL_WO_SECTION'  => 'Y',
         'CACHE_TYPE'           => 'A',
         'CACHE_TIME'           => '36000000',
+        'MODE' => 'popular',
     ],
     false
 );

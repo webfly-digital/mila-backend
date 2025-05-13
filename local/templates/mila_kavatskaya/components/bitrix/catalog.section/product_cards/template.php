@@ -1,16 +1,32 @@
 <?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 /** @var array $arResult */
+/** @var array $arParams */
 
 if (empty($arResult["ITEMS"])) {
     return;
 }
 
 $this->setFrameMode(true);
+
+$mode = $arParams['MODE'] ?? 'catalog';
 ?>
 
 <section class="default">
+    <?php if ($mode === 'search') { ?>
+        <div class="head">
+            <p class="heading_4">По запросу «<?= htmlspecialcharsbx($_GET['q'] ?? '') ?>» найдено <?= count($arResult["ITEMS"]) ?> товаров</p>
+        </div>
+        <div class="catalog_wrapper">
+    <?php } elseif ($mode === 'popular') { ?>
+        <div class="head">
+            <p class="heading_1 upper"><span class="heading_1_italic red">Популярные</span> сорта чая</p>
+        </div>
+        <div class="populars">
+    <?php } else { ?>
     <div class="catalog_wrapper">
+    <?php } ?>
+
         <?php foreach ($arResult["ITEMS"] as $item) { ?>
             <?php
             $labels = $item['PROPERTIES']['LEYBLY_STATUSY']['VALUE_ENUM'] ?? [];
@@ -23,8 +39,8 @@ $this->setFrameMode(true);
                 ?: $item['PROPERTIES']['TIP_KOFE']['VALUE']
                     ?: '';
 
-            $price = $item['ITEM_PRICES'][0]['PRINT_PRICE'];
-            $oldPrice = $item['ITEM_PRICES'][0]['PRINT_BASE_PRICE'];
+        $price = $item['ITEM_PRICES'][0]['PRINT_PRICE'] ?? '';
+        $oldPrice = $item['ITEM_PRICES'][0]['PRINT_BASE_PRICE'] ?? '';
             $showOld = $oldPrice && $oldPrice !== $price;
             ?>
 
@@ -53,13 +69,12 @@ $this->setFrameMode(true);
 
                 <?php if (!empty($item['OFFERS'])) { ?>
                     <nav class="badges medium" data-type="badges">
-                        <?php foreach ($item['OFFERS'] as $offer) { ?>
-                            <?php
+                    <?php foreach ($item['OFFERS'] as $offer) {
                             $weight = $offer['PROPERTIES']['VES']['VALUE'];
                             if ($weight) { ?>
                                 <p class="badge"><?= htmlspecialcharsbx($weight) ?> г</p>
-                            <?php } ?>
-                        <?php } ?>
+                        <?php }
+                    } ?>
                     </nav>
                 <?php } ?>
 
@@ -75,7 +90,7 @@ $this->setFrameMode(true);
                     </div>
                 </div>
             </div>
-
         <?php } ?>
-    </div>
+
+    </div> <!-- .catalog_wrapper или .populars -->
 </section>
