@@ -16,7 +16,7 @@ $APPLICATION->AddChainItem("Сотрудничество", "/cooperation/");
                 "",
                 [
                     "AREA_FILE_SHOW" => "file",
-                    "PATH" => SITE_TEMPLATE_PATH . "/include/cooperation/cooperation_text.php",
+                    "PATH" => SITE_TEMPLATE_PATH . "/include/about/cooperation_text.php",
                     "EDIT_TEMPLATE" => ""
                 ],
                 false
