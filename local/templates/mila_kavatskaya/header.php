@@ -6,6 +6,8 @@ use Bitrix\Main\Page\Asset;
  * @global CMain $APPLICATION
  */
 
+global $USER;
+
 $oAsset = Asset::getInstance();
 ?>
     <!doctype html>
@@ -181,9 +183,16 @@ $oAsset = Asset::getInstance();
                 <p class="header_user-basket" data-notify="1" data-opener="cart">
                     <i></i>
                 </p>
-                <p class="header_user-profile" data-opener="auth">
-                    <i></i>
-                </p>
+                <?php
+                if ($USER->IsAuthorized()) { ?>
+                    <a href="/profile/" class="header_user-profile">
+                        <i></i>
+                    </a>
+                <?php } else { ?>
+                    <p class="header_user-profile" data-opener="auth">
+                        <i></i>
+                    </p>
+                <?php } ?>
             </div>
         </div>
         <?php include SITE_TEMPLATE_PATH . "/include/menu/mobile_menu.php"; ?>
