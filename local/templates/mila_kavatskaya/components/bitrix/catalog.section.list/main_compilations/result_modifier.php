@@ -38,6 +38,4 @@ foreach ($arResult["SECTIONS"] as $key => $section) {
     }
 
     $arResult["SECTIONS"][$key]["SUBSECTIONS"] = $subSections;
-
-    //\Bitrix\Main\Diag\Debug::dump($arResult["SECTIONS"]);
 }
