@@ -1,9 +1,13 @@
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 
+use Bitrix\Main\Page\Asset;
+
 /** @global CMain $APPLICATION */
 
 $APPLICATION->SetTitle("О компании");
 $APPLICATION->AddChainItem("О компании", "/about/");
+
+Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/assets/js/pages/about.js");
 ?>
 
 <section class="info_section">
