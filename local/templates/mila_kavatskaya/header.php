@@ -19,6 +19,9 @@ $oAsset = Asset::getInstance();
         // Подключение CSS
         $oAsset->addCss(SITE_TEMPLATE_PATH . "/assets/styles/style.css");
 
+        // Подключение jQuery
+        $oAsset->addString('<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>', true);
+
         // Прелоад JS
         //    $oAsset->addString('<link crossorigin="anonymous" rel="modulepreload" as="script" href="https://unpkg.com/imask">');
         //    $oAsset->addString('<link crossorigin="anonymous" rel="modulepreload" as="script" href="https://cdn.jsdelivr.net/npm/easydropdown@5.0.2">');

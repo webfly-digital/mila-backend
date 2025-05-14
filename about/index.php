@@ -1,46 +1,58 @@
-<?
-require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("О магазине");
+<?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+
+use Bitrix\Main\Page\Asset;
+
+/** @global CMain $APPLICATION */
+
+$APPLICATION->SetTitle("О компании");
+$APPLICATION->AddChainItem("О компании", "/about/");
+
+Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/assets/js/pages/about.js");
 ?>
 
-	<p>Мы рады приветствовать вас на сайте нашей компании.</p>
+<section class="info_section">
+    <div class="heading_1 upper">О компании</div>
+    <img src="<?= SITE_TEMPLATE_PATH ?>/assets/img/jpg/about-header.jpg" alt="">
+    <div class="right_content">
+        <?php
+        $APPLICATION->IncludeComponent(
+            "bitrix:main.include",
+            "",
+            [
+                "AREA_FILE_SHOW" => "file",
+                "PATH" => SITE_TEMPLATE_PATH . "/include/about/about_text.php",
+                "EDIT_TEMPLATE" => ""
+            ],
+            false
+        );
+        ?>
+        <img src="<?= SITE_TEMPLATE_PATH ?>/assets/img/jpg/about-inside.jpg" alt="">
+    </div>
+</section>
 
-	<p>Наша компания была основана в 1993 году, а наш интернет-магазин стал одним из первых магазинов, осуществляющих on-line продажу одежды в регионе. Компания специализируется на оптовой и розничной продаже одежды как для дома, так и для офиса.</p>
+<?php
+$APPLICATION->IncludeComponent(
+    "bitrix:news.list",
+    "reviews",
+    [
+        "IBLOCK_TYPE" => "content",
+        "IBLOCK_ID" => REVIEWS_IBLOCK_ID,
+        "NEWS_COUNT" => "100",
+        "SORT_BY1" => "ACTIVE_FROM",
+        "SORT_ORDER1" => "DESC",
+        "PROPERTY_CODE" => ["RATING", "IMAGES"],
+        "CHECK_DATES" => "Y",
+        "SET_TITLE" => "N",
+        "INCLUDE_SUBSECTIONS" => "N",
+        "SHOW_ALL_ELEMENTS" => "Y",
+        "SHOW_DETAIL_LINK" => "N",
+        "HIDE_LINK_WHEN_NO_DETAIL" => "Y",
+        "CACHE_TYPE" => "A",
+        "CACHE_TIME" => "3600",
+        "CACHE_FILTER" => "N",
+        "CACHE_GROUPS" => "Y"
+    ],
+    false
+);
 
-	<p>На данный момент мы представляем собой крупную компанию, владеющую интернет&ndash;магазином и имеющую в своей сети единый call-центр, который регулирует всю деятельность магазина, отдел продаж, службу доставки, широкий штат квалифицированных сборщиков, собственный склад c постоянным наличием необходимого запаса товаров.</p>
-
-	<p>За это время у нас сложились партнерские отношения с ведущими производителями, позволяющие предлагать высококачественную продукцию по конкурентоспособным ценам.</p>
-
-	<p>Мы можем гордиться тем, что у нас один из самых широких ассортиментов одежды в городе и области. </p>
-
-	<h2>Наши возможности</h2>
-	<div class="row">
-		<div class="col-sm-4">
-			<ul>
-				<li><span style="font-size:13px;">Быстрая доставка</span></li>
-				<li><span style="font-size:13px;">Низкие цены</span></li>
-				<li><span style="font-size:13px;">Широкий ассортимент</span></li>
-				<li><span style="font-size:13px;">Бонусы и подарки</span></li>
-			</ul>
-		</div>
-		<div class="col-sm-4">
-			<ul>
-				<li><span style="font-size:13px;">Отличное обслуживаение</span></li>
-				<li><span style="font-size:13px;">Профессиональный менеджеры</span></li>
-				<li><span style="font-size:13px;">Гарантия на все товары</span></li>
-				<li><span style="font-size:13px;">Надежные поставщики</span></li>
-			</ul>
-		</div>
-		<div class="col-sm-4">
-			<ul>
-				<li><span style="font-size:13px;">Сезонные скидки</span></li>
-				<li><span style="font-size:13px;">Программа лояльности</span></li>
-				<li><span style="font-size:13px;">Карты постоянных клиентов</span></li>
-			</ul>
-		</div>
-	</div>
-	<br/>
-	<p>Мы всегда рады общению с нашими клиентами. Если у вас есть какие-либо пожелания, предложения, замечания, касающиеся работы нашего Интернет-магазина - пишите нам, и мы с благодарностью примем ваше мнение во внимание:</p>
-	<p><b>Электронная почта</b>: <a href="mailto:sale@mila-kavatskaya.ru">sale@mila-kavatskaya.ru</a></p>
-
-<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
