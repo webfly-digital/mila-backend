@@ -197,7 +197,13 @@ $oAsset = Asset::getInstance();
                 <?php } ?>
             </div>
         </div>
-        <?php include SITE_TEMPLATE_PATH . "/include/menu/mobile_menu.php"; ?>
+        <?php
+        $file = $_SERVER["DOCUMENT_ROOT"] . SITE_TEMPLATE_PATH . "/include/menu/mobile_menu.php";
+        if (file_exists($file)) {
+            include $file;
+        }
+        ?>
+
     </header>
 
 <main class="main">
