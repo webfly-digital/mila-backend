@@ -7,9 +7,13 @@
  * @var CBitrixComponentTemplate $this
  */
 
+use Webfly\Tools\Favorites;
+
 $this->setFrameMode(true);
 
 global $arrFilter;
+
+$favoritesIds = Favorites::getIds();
 
 // Глобальный счётчик карточек
 if (!isset($GLOBALS['CAT_ITEM_IDX'])) {
@@ -102,6 +106,8 @@ foreach ($resultItems as $entry) {
         $price = $item['ITEM_PRICES'][0]['PRINT_PRICE'];
         $oldPrice = $item['ITEM_PRICES'][0]['PRINT_BASE_PRICE'];
         $showOld = $oldPrice && $oldPrice !== $price;
+
+        $isFavorite = in_array($item['ID'], $favoritesIds, true);
         ?>
 
         <div class="product_card" data-type="badges_holder" id="<?= $item['ID'] ?>">
@@ -112,8 +118,8 @@ foreach ($resultItems as $entry) {
                     } ?>
                 </div>
                 <img src="<?= $picture ?>" alt="<?= htmlspecialcharsbx($item['NAME']) ?>">
-                <div class="like" data-fav="<?= $item['ID'] ?>"></div>
             </a>
+            <div class="like<?= $isFavorite ? ' active' : '' ?>" data-fav="<?= $item['ID'] ?>"></div>
 
             <div class="stars" data-score="0"></div>
 
