@@ -8888,6 +8888,7 @@ section.default .head .heading_1 {
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
 }
 .product_card .imgholder {
   position: relative;
@@ -8917,7 +8918,7 @@ section.default .head .heading_1 {
   gap: 8px;
   flex-wrap: wrap;
 }
-.product_card .imgholder .like {
+.product_card .like {
   display: block;
   width: 24px;
   height: 24px;
@@ -8927,7 +8928,7 @@ section.default .head .heading_1 {
   right: 18px;
   z-index: 2;
 }
-.product_card .imgholder .like:after {
+.product_card .like:after {
   content: "";
   display: block;
   width: 100%;
@@ -8937,19 +8938,19 @@ section.default .head .heading_1 {
   mask-size: contain;
   background-color: #2B2B2B;
 }
-.product_card .imgholder .like:hover:after {
+.product_card .like:hover:after {
   mask-image: url(../img/icon/heart_fill.svg);
   mask-repeat: no-repeat;
   mask-size: contain;
   background-color: #AC2525;
 }
-.product_card .imgholder .like.active:after {
+.product_card .like.active:after {
   mask-image: url(../img/icon/heart_fill.svg);
   mask-repeat: no-repeat;
   mask-size: contain;
   background-color: #2B2B2B;
 }
-.product_card .imgholder .like.active:hover:after {
+.product_card .like.active:hover:after {
   mask-image: url(../img/icon/heart.svg);
   mask-repeat: no-repeat;
   mask-size: contain;
