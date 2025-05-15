@@ -1,6 +1,4 @@
 $(document).on('click', '.like[data-fav]', function (e) {
-    e.preventDefault();
-
     const $like = $(this);
     const productId = parseInt($like.data('fav'));
 
@@ -20,15 +18,11 @@ $(document).on('click', '.like[data-fav]', function (e) {
 
             if (data.success) {
                 $like.toggleClass('active', data.favorited);
-
-                const $counter = $('.header_user-favourites .counter');
-                if ($counter.length) {
-                    $counter.text(data.count);
-                }
+                // todo: вставить счётчик при необходимости
             }
         },
-        error: function () {
-            console.error('Ошибка при добавлении в избранное');
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error('Ошибка ajax:', jqXHR.status, jqXHR.statusText, errorThrown);
         }
     });
 });

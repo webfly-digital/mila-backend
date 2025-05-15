@@ -23,6 +23,8 @@ $oAsset = Asset::getInstance();
 
         // Подключение jQuery
         $oAsset->addString('<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>', true);
+        // Подключение обработчика для иконки избранного
+        $oAsset->addJs(SITE_TEMPLATE_PATH . "/assets/js/pages/favorites.js");
 
         // Прелоад JS
         //    $oAsset->addString('<link crossorigin="anonymous" rel="modulepreload" as="script" href="https://unpkg.com/imask">');
