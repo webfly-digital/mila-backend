@@ -15,4 +15,4 @@ define("PARTNERS_IBLOCK_ID", 26); // id ИБ "Наши партнёры"
 define("REVIEWS_IBLOCK_ID", 27); // id ИБ отзывов
 
 define("COMPILATIONS_HLBLOCK_ID", 4); // id HL-блока подборок
-define("FAVORITES_HLBLOCK_ID", 4); // id HL-блока избранного
+define("FAVORITES_HLBLOCK_ID", 5); // id HL-блока избранного
