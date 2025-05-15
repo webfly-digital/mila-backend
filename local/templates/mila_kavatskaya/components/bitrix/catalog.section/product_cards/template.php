@@ -62,8 +62,8 @@ $favoritesIds = Favorites::getIds();
                                     <?php } ?>
                                 </div>
                                 <img src="<?= $picture ?>" alt="<?= htmlspecialcharsbx($item['NAME']) ?>">
-                                <div class="like<?= $isFavorite ? ' active' : '' ?>" data-fav="<?= $item['ID'] ?>"></div>
                             </a>
+                            <div class="like<?= $isFavorite ? ' active' : '' ?>" data-fav="<?= $item['ID'] ?>"></div>
 
                             <div class="stars" data-score="0"></div>
 
