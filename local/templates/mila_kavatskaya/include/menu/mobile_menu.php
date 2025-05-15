@@ -1,3 +1,7 @@
+<?php
+/** @global CMain $APPLICATION */
+?>
+
 <div class="mobile_menu" data-popup="mobile_menu" data-noscroll>
     <!-- <i data-closer="mobile_menu"></i> -->
     <div class="justify">
@@ -15,16 +19,38 @@
         <!-- <a href="">Подарочная карта</a> -->
     </nav>
     <nav class="links heading_5">
-        <a href="stocks.html">Акции</a>
-        <a href="delivery.html">Доставка и оплата</a>
-        <a href="loyalty.html">Система лояльности</a>
-        <a href="about.html">О компании</a>
-        <a href="blog.html">Блог</a>
-        <a href="vacancy.html">Вакансии</a>
-        <a href="cooperation.html">Сотрудничество</a>
-        <a href="qna.html">Вопрос-ответ</a>
-        <a href="contacts.html">Контакты</a>
+        <?php
+        $APPLICATION->IncludeComponent(
+            "bitrix:menu",
+            "mobile_links",
+            [
+                "ROOT_MENU_TYPE" => "top_left",
+                "MENU_CACHE_TYPE" => "A",
+                "MENU_CACHE_TIME" => "3600",
+                "MENU_CACHE_USE_GROUPS" => "Y",
+                "MAX_LEVEL" => "1",
+                "CHILD_MENU_TYPE" => "",
+                "USE_EXT" => "N",
+                "ALLOW_MULTI_SELECT" => "N"
+            ]
+        );
+        $APPLICATION->IncludeComponent(
+            "bitrix:menu",
+            "mobile_links",
+            [
+                "ROOT_MENU_TYPE" => "top_right",
+                "MENU_CACHE_TYPE" => "A",
+                "MENU_CACHE_TIME" => "3600",
+                "MENU_CACHE_USE_GROUPS" => "Y",
+                "MAX_LEVEL" => "2",
+                "CHILD_MENU_TYPE" => "top_right",
+                "USE_EXT" => "N",
+                "ALLOW_MULTI_SELECT" => "N"
+            ]
+        );
+        ?>
     </nav>
+
     <div class="mobile_menu-contacts">
         <a href="tel:+79999999999" class="heading_4">8 (999) 999-99-99</a>
         <p class="text grey">с 9:00 до 20:00</p>
