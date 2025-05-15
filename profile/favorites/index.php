@@ -1,10 +1,13 @@
 <?php require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 
+use Bitrix\Main\Page\Asset;
+use Webfly\Tools\Favorites;
+
 /** @global CMain $APPLICATION */
 
 $APPLICATION->SetTitle("Избранное");
 
-use Webfly\Tools\Favorites;
+Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/assets/js/pages/favorites.js");
 
 $ids = Favorites::getIds();
 

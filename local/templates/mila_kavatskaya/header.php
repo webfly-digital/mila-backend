@@ -177,7 +177,7 @@ $oAsset = Asset::getInstance();
                         ]
                     ); ?>
                 </div>
-                <a href="favourite.html" class="header_user-favourites">
+                <a href="/profile/favorites/" class="header_user-favourites">
                     <i></i>
                 </a>
                 <p class="header_user-basket" data-notify="1" data-opener="cart">
