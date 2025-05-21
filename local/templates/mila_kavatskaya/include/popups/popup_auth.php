@@ -2,4 +2,4 @@
 
 /** @global CMain $APPLICATION */
 
-$APPLICATION->IncludeComponent("ctweb:sms.authorize", "popup", []);
+//$APPLICATION->IncludeComponent("ctweb:sms.authorize", "popup", []);
